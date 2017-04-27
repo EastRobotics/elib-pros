@@ -2,6 +2,10 @@
 
 #define PID_LOOP_COUNT 1
 
+// functions to be called upon starting the pid loop
+typedef void (*initFunction)(void);
+initFunction initializers[PID_LOOP_COUNT];
+
 // functions to get the current values
 typedef double (*getCurrentValFunction)();
 getCurrentValFunction valueGetters[PID_LOOP_COUNT];
@@ -11,7 +15,7 @@ typedef void (*setCurrentValFunction)(double);
 setCurrentValFunction valueSetters[PID_LOOP_COUNT];
 
 // functions to run upon completing loop
-typedef void (*PIDIteratorCallbackFunction)();
+typedef void (*PIDIteratorCallbackFunction)(void);
 PIDIteratorCallbackFunction callbacks[PID_LOOP_COUNT];
 
 double targets[PID_LOOP_COUNT];        // target values
@@ -47,11 +51,6 @@ bool runPID(int index) {
 
   // calculate the error
   double error = target - current;
-
-  printf("kP: %lf\n", Kp);
-  printf("error: %lf \n", error);
-  printf("curr: %lf \n", current);
-  printf("targ: %lf \n", target);
 
   // if close enough, break out
   if (abs(error) < thresh) {
@@ -115,6 +114,11 @@ void startPIDLoop(unsigned int index, double target) {
   // set target value
   targets[index] = target;
 
+  print("starting\n");
+  delay(1000);
+  // run initialization function
+  initializers[index]();
+
   // activate loop
   loopActive[index] = true;
 }
@@ -157,13 +161,14 @@ void stopPIDLoop(unsigned int index, bool runCallback) {
 // double: max integral limit before reset
 // double: range of accepted values to terminate loop, should be relatively low,
 // depending on what you are measuring
-int setPIDLoop(unsigned int index, getCurrentValFunction valueGetter,
+int setPIDLoop(unsigned int index, initFunction init, getCurrentValFunction valueGetter,
                setCurrentValFunction valueSetter,
                PIDIteratorCallbackFunction PIDIteratorCallback, double kP,
                double kI, double kD, double integralLimit, double threshold) {
   if (index < PID_LOOP_COUNT) { // still can create loops (under max)
     // initialize "instance data" (I really like OOP)
     // probably should have used structs, but this should work
+    initializers[index] = init;
     valueGetters[index] = valueGetter;
     valueSetters[index] = valueSetter;
     callbacks[index] = PIDIteratorCallback;
@@ -197,12 +202,12 @@ int setPIDLoop(unsigned int index, getCurrentValFunction valueGetter,
 // double: max integral limit before reset
 // double: range of accepted values to terminate loop, should be relatively low,
 // depending on what you are measuring
-int addPIDLoop(getCurrentValFunction valueGetter,
+int addPIDLoop(initFunction init, getCurrentValFunction valueGetter,
                setCurrentValFunction valueSetter,
                PIDIteratorCallbackFunction PIDIteratorCallback, double kP,
                double kI, double kD, double integralLimit, double threshold) {
   int index =
-      setPIDLoop(initializedLoops, valueGetter, valueSetter,
+      setPIDLoop(initializedLoops, init, valueGetter, valueSetter,
                  PIDIteratorCallback, kP, kI, kD, integralLimit, threshold);
   if (index != -1) {
     initializedLoops++;

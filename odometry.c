@@ -24,9 +24,9 @@ void odomReset() {
   posTheta = 0;
 }
 
-void initOdomScale(float wheelDiam, float driveCircum) {
-  scale = (wheelDiam * PI * IN_TO_MM) / TICKS_PER_REV; // 1 in = 25.4 mm
-  turnScale = (hypot(15,13)/wheelDiam)*1.76;
+void initOdomScale(float wheelDiam, float driveCircum, float wheelEncRatio) {
+  scale = (wheelDiam * PI * IN_TO_MM * wheelEncRatio) / TICKS_PER_REV; // 1 in = 25.4 mm
+  turnScale = (hypot(15,13)/wheelDiam)/**1.76*/;
 }
 
 // Based off https://github.com/VTOW/BCI/tree/master/Modules odometry
@@ -38,18 +38,17 @@ void trackRobotPosition(void *param) {
   float leftMM, rightMM, mm;
   int leftCurr, rightCurr;
   long lastLeft, lastRight, leftTicks, rightTicks;
-  int lastGyro = gyroGet(getGyro());
 
   while (true) {
     // Save current quads
     leftCurr = encoderGet(getEncoderBL());
     rightCurr = encoderGet(getEncoderBR());
 
-    print("----------------------------------------\n");
-    printf("LCurr: %d\n", leftCurr);
-    printf("RCurr: %d\n", rightCurr);
-    printf("LLast: %ld\n", lastLeft);
-    printf("RLast: %ld\n", lastRight);
+    //print("----------------------------------------\n");
+    // printf("LCurr: %d\n", leftCurr);
+    // printf("RCurr: %d\n", rightCurr);
+    // printf("LLast: %ld\n", lastLeft);
+    // printf("RLast: %ld\n", lastRight);
     // printf("turnScale: %f\n", turnScale);
 
     // Get delta angle
@@ -74,8 +73,7 @@ void trackRobotPosition(void *param) {
     //if ((rightMM-leftMM) != 0) {
     //  posTheta += (rightMM - leftMM) / turnScale; // May be broken
     //}
-    posTheta += (gyroGet(getGyro()) - lastGyro);
-    lastGyro = gyroGet(getGyro());
+    posTheta = gyroGet(getGyro());
     // printf("posTheta: %f\n", posTheta);
 
     // Wrap theta
@@ -88,10 +86,10 @@ void trackRobotPosition(void *param) {
     // Do the odom math
     // printf("xAdd: %f\n", mm * cos(posThetaRad));
     // printf("yAdd: %f\n", mm * sin(posThetaRad));
-    posX += mm * cos(posThetaRad);
-    posY += mm * sin(posThetaRad);
+    posX -= mm * sin(posThetaRad);
+    posY += mm * cos(posThetaRad);
 
-    print("----------------------------------------\n");
+    //print("----------------------------------------\n");
 
     delay(25); // Give some other tasks some time
   }
