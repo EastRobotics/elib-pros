@@ -1,6 +1,19 @@
 #include "main.h"
 #include "string.h"
 
+/*******************************************************************************
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+NOTICE:
+  This file has moved to our main repository. We had too many issues dealing
+  with the submodule linking this project to our main one. You can find the new
+  and up-to-date version of this file at the following URL:
+  
+  > https://github.com/EastRobotics/2616E/blob/master/In%20The%20Zone/src/2616E_lib/lcd.c
+  
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*******************************************************************************/
+
 // TODO: Add back in hold time detection
 // TODO: Rewrite to be much cleaner and easier to use
 
