@@ -1,6 +1,19 @@
 #include "main.h"
 #include "JINX.h"
 
+/*******************************************************************************
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+NOTICE:
+  This file has moved to our main repository. We had too many issues dealing
+  with the submodule linking this project to our main one. You can find the new
+  and up-to-date version of this file at the following URL:
+  
+  > https://github.com/EastRobotics/2616E/blob/master/In%20The%20Zone/src/2616E_lib/drive.c
+  
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*******************************************************************************/
+
 #define DRIVE_THRESHOLD_FORWARD 15 // Joystick forward threshold
 #define DRIVE_THRESHOLD_TURN 15    // Joystick turn threshold
 #define DRIVE_THRESHOLD_STRAFE 15  // Joystick strafe threshold
