@@ -2,6 +2,19 @@
 
 #define PID_LOOP_COUNT 1
 
+/*******************************************************************************
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+NOTICE:
+  This file has moved to our main repository. We had too many issues dealing
+  with the submodule linking this project to our main one. You can find the new
+  and up-to-date version of this file at the following URL:
+  
+  > https://github.com/EastRobotics/2616E/blob/master/In%20The%20Zone/src/2616E_lib/pid.c
+  
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*******************************************************************************/
+
 // functions to be called upon starting the pid loop
 typedef void (*initFunction)(void);
 initFunction initializers[PID_LOOP_COUNT];
