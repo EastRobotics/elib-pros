@@ -1,6 +1,19 @@
 #include "main.h"
 #include "math.h"
 
+/*******************************************************************************
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+NOTICE:
+  This file has moved to our main repository. We had too many issues dealing
+  with the submodule linking this project to our main one. You can find the new
+  and up-to-date version of this file at the following URL:
+  
+  > https://github.com/EastRobotics/2616E/blob/master/In%20The%20Zone/src/2616E_lib/odometry.c
+  
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*******************************************************************************/
+
 #define IN_TO_MM (25.4)
 #define MM_TO_IN (1 / 25.4)
 #define PI acos(-1.0)
